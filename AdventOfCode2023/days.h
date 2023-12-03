@@ -6,3 +6,4 @@
 std::vector<std::string> readLinesFromFile(const std::string& fileName);
 
 void day1();
+void day2();

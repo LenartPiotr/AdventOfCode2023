@@ -21,6 +21,9 @@
     <ClCompile Include="day1.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="day2.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="days.h">
@@ -29,6 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="data\day1.txt">
+      <Filter>Pliki zasobów</Filter>
+    </Text>
+    <Text Include="data\day2.txt">
       <Filter>Pliki zasobów</Filter>
     </Text>
   </ItemGroup>
