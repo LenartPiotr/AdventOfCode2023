@@ -30,24 +30,13 @@
     <ClCompile Include="day4.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="day5.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="days.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="data\day1.txt">
-      <Filter>Pliki zasobów</Filter>
-    </Text>
-    <Text Include="data\day2.txt">
-      <Filter>Pliki zasobów</Filter>
-    </Text>
-    <Text Include="data\day3.txt">
-      <Filter>Pliki zasobów</Filter>
-    </Text>
-    <Text Include="data\day4.txt">
-      <Filter>Pliki zasobów</Filter>
-    </Text>
   </ItemGroup>
 </Project>
