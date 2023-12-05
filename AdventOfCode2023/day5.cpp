@@ -44,8 +44,81 @@ void applyMapToVector(vector<long long>& numbers, const vector<vector<array<long
 	}
 }
 
+vector<pair<long long, long long>> vectorToPair(const vector<long long>& vect) {
+	vector<pair<long long, long long>> pairs;
+	for (int i = 0; i < vect.size(); i += 2) {
+		pair<long long, long long> p(vect[i], vect[i + 1]);
+		pairs.push_back(p);
+	}
+	return pairs;
+}
+
+vector<pair<long long, long long>> optimizeCountVector(const vector<pair<long long, long long>>& numbers) {
+	vector<pair<long long, long long>> copy(numbers);
+	sort(copy.begin(), copy.end(), [](const pair<long long, long long>& p1, const pair<long long, long long>& p2) { return p1.first < p2.first; });
+	for (int i = 0; i < copy.size() - 1; i++) {
+		if (copy[i].first + copy[i].second >= copy[i + 1].first) {
+			copy[i].second = copy[i + 1].first + copy[i + 1].second - copy[i].first;
+			copy.erase(copy.begin() + i + 1);
+			i--;
+		}
+	}
+	return copy;
+}
+
+vector<pair<long long, long long>> applyVectorToMapWithCounts(const vector<pair<long long, long long>>& in, const vector<array<long long, 3>>& map) {
+	vector<pair<long long, long long>> results;
+	auto pairs = optimizeCountVector(in);
+	int lastMapIndex = 0;
+	auto lastRange = map[0];
+	auto firstRangeValue = lastRange[1];
+	auto lastRangeValue = lastRange[1] + lastRange[2] - 1ll;
+	bool sameToEnd = false;
+	for (int pIndex = 0; pIndex < pairs.size(); pIndex++) {
+		auto& pair = pairs[pIndex];
+		auto firstValue = pair.first;
+		auto lastValue = pair.first + pair.second - 1ll;
+		while (firstValue <= lastValue) {
+			if (sameToEnd) {
+				results.push_back({ firstValue, lastValue - firstValue + 1ll });
+				break;
+			}
+			// values are belog map range
+			if (firstValue < firstRangeValue) {
+				if (lastValue < firstRangeValue) {
+					results.push_back({ firstValue, lastValue - firstValue + 1ll });
+					break;
+				}
+				results.push_back({ firstValue, firstRangeValue - firstValue });
+				firstValue = firstRangeValue;
+			}
+			// values are above map range
+			if (firstValue > lastRangeValue) {
+				lastMapIndex++;
+				if (lastMapIndex >= map.size()) {
+					sameToEnd = true;
+					continue;
+				}
+				lastRange = map[lastMapIndex];
+				firstRangeValue = lastRange[1];
+				lastRangeValue = lastRange[1] + lastRange[2] - 1ll;
+				continue;
+			}
+			// first value is in range
+			auto firstMappedValue = lastRange[0] + firstValue - lastRange[1];
+			if (lastValue <= lastRangeValue) {
+				results.push_back({ firstMappedValue, lastValue - firstValue + 1ll });
+				break;
+			}
+			results.push_back({ firstMappedValue, lastRangeValue - firstValue + 1ll });
+			firstValue = lastRangeValue + 1ll;
+		}
+	}
+	return results;
+}
+
 void day5() {
-	vector<string> lines = readLinesFromFile("./data/test.txt");
+	vector<string> lines = readLinesFromFile("./data/day5.txt");
 	vector<long long> seeds;
 	vector<vector<array<long long, 3>>> maps;
 	
@@ -82,4 +155,12 @@ void day5() {
 	applyMapToVector(seedsCopy, maps);
 	long long minValue = *std::min_element(seedsCopy.begin(), seedsCopy.end());
 	cout << minValue << endl;
+
+	// part 2
+	auto pairs = vectorToPair(seeds);
+	for (auto& map : maps) {
+		pairs = applyVectorToMapWithCounts(pairs, map);
+	}
+	pairs = optimizeCountVector(pairs);
+	cout << pairs[0].first << endl;
 }
