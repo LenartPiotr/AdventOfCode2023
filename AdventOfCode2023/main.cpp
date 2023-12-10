@@ -26,5 +26,5 @@ vector<string> readLinesFromFile(const string& fileName) {
 }
 
 int main() {
-    day9();
+    day10();
 }
