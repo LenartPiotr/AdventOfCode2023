@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include "days.h"
 
@@ -25,6 +26,16 @@ vector<string> readLinesFromFile(const string& fileName) {
     return lines;
 }
 
+vector<string> split(const string& s, char delimiter) {
+    vector<string> tokens;
+    istringstream stream(s);
+    string token;
+    while (getline(stream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
 int main() {
-    day19();
+    day20();
 }

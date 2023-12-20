@@ -1,5 +1,5 @@
-124343
-125613
-124422
-124521
-231532
+broadcaster -> a
+%a -> inv, con
+&inv -> b
+%b -> con
+&con -> output

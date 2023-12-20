@@ -28,16 +28,6 @@ struct Workflow {
 	int targetIndex;
 };
 
-vector<string> split(const string& s, char delimiter) {
-	vector<string> tokens;
-	istringstream stream(s);
-	string token;
-	while (getline(stream, token, delimiter)) {
-		tokens.push_back(token);
-	}
-	return tokens;
-}
-
 int applyPartToRules(const array<int, 4>& part, const vector<Rule>& rules, int els) {
 	for (auto& r : rules) {
 		if (part[r.index] == r.value) continue;

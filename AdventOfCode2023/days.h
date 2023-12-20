@@ -4,6 +4,7 @@
 #pragma once
 
 std::vector<std::string> readLinesFromFile(const std::string& fileName);
+std::vector<std::string> split(const std::string& s, char delimiter);
 
 void day1();
 void day2();
@@ -24,3 +25,4 @@ void day16();
 void day17();
 void day18();
 void day19();
+void day20();
