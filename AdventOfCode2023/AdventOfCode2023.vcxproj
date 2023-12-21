@@ -152,7 +152,6 @@
     <ClCompile Include="day9.cpp" />
     <ClCompile Include="hash.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Table.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="days.h" />
