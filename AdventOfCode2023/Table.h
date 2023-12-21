@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 
 #pragma once
 
@@ -26,6 +27,17 @@ public:
 
 	inline bool inRange(int x, int y) {
 		return x >= 0 && x < this->width && y >= 0 && y < this->height;
+	}
+
+	template <typename Function>
+	void forEach(Function f) {
+		for (int x = 0; x < this->width; x++)
+		{
+			for (int y = 0; y < this->height; y++)
+			{
+				f(this->tab[x][y]);
+			}
+		}
 	}
 
 	friend std::ostream& operator<<(std::ostream& os, const Table<T>& t) {

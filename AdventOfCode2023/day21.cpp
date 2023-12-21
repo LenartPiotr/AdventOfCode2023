@@ -16,7 +16,7 @@ struct Step {
 	int dist;
 };
 
-void part1(Table<bool> t, int sx, int sy, int limit) {
+void part1(Table<bool>& t, int sx, int sy, int limit) {
 	Table<int> visited(t.width, t.height, INT_MAX);
 	
 	queue<Step> steps;
@@ -29,6 +29,7 @@ void part1(Table<bool> t, int sx, int sy, int limit) {
 		steps.pop();
 		if (s.dist > limit) continue;
 		if (!t.inRange(s.x, s.y)) continue;
+		if (t[s.x][s.y]) continue;
 		if (visited[s.x][s.y] <= s.dist) continue;
 		visited[s.x][s.y] = s.dist;
 		for (int i = 0; i < 4; i++) {
@@ -36,15 +37,19 @@ void part1(Table<bool> t, int sx, int sy, int limit) {
 		}
 	}
 
-	cout << visited << endl;
+	int even = 0;
+	visited.forEach([&even](int value) {
+		if (value != INT_MAX && value % 2 == 0) even++;
+	});
+	cout << even << endl;
 }
 
 void day21() {
-	vector<string> lines = readLinesFromFile("./data/test.txt");
+	vector<string> lines = readLinesFromFile("./data/day21.txt");
 	int width = lines[0].length();
 	int height = lines.size();
 	
-	int sx, sy;
+	int sx = 0, sy = 0;
 	Table<bool> tab(width, height, false);
 	for (int y = 0; y < height; y++) {
 		string line = lines[y];
@@ -57,5 +62,5 @@ void day21() {
 		}
 	}
 
-	part1(tab, sx, sy, 6);
+	part1(tab, sx, sy, 64);
 }
