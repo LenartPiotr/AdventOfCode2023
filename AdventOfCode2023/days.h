@@ -27,3 +27,4 @@ void day18();
 void day19();
 void day20();
 void day21();
+void day22();

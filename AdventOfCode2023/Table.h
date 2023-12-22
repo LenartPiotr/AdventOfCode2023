@@ -20,6 +20,16 @@ public:
 		this->width = w;
 		this->height = h;
 	}
+	template <typename Function>
+	Table(int w, int h, Function f) {
+		this->tab = new T * [w];
+		for (int x = 0; x < w; x++) {
+			this->tab[x] = new T[h];
+			for (int y = 0; y < h; y++) this->tab[x][y] = f(x, y);
+		}
+		this->width = w;
+		this->height = h;
+	}
 	~Table() {
 		for (int x = 0; x < this->width; x++) delete[] this->tab[x];
 		delete[] this->tab;
