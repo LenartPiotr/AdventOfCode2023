@@ -17,7 +17,7 @@ enum ModuleType {
 	FLIP_FLOP, CONJUNCTION, BROADCAST, OUTPUT
 };
 
-struct Connection {
+struct Connect {
 	string name;
 	int id;
 	int inputId;
@@ -27,7 +27,7 @@ struct Module {
 	ModuleType type;
 	string name;
 	int index;
-	vector<Connection> connections;
+	vector<Connect> connections;
 	int memoryIndex;
 };
 
@@ -77,7 +77,7 @@ void part1(vector<Module> modules, vector<bool> memFlip, vector<ConjunctionMemor
 			switch (m.type)
 			{
 			case BROADCAST:
-				for (Connection c : m.connections) {
+				for (Connect c : m.connections) {
 					Q.push({ c.id, imp.high, c.inputId });
 				}
 				break;
@@ -88,7 +88,7 @@ void part1(vector<Module> modules, vector<bool> memFlip, vector<ConjunctionMemor
 				if (state) flipFlopOnCount++;
 				else flipFlopOnCount--;
 				memFlip[m.memoryIndex] = state;
-				for (Connection c : m.connections) {
+				for (Connect c : m.connections) {
 					Q.push({ c.id, state, c.inputId });
 				}
 				break;
@@ -100,7 +100,7 @@ void part1(vector<Module> modules, vector<bool> memFlip, vector<ConjunctionMemor
 					memCon[m.memoryIndex].signals[imp.inputId] = imp.high;
 				}
 				allHighs = memCon[m.memoryIndex].highCount == memCon[m.memoryIndex].signals.size();
-				for (Connection c : m.connections) {
+				for (Connect c : m.connections) {
 					Q.push({ c.id, !allHighs, c.inputId });
 				}
 				break;
@@ -187,7 +187,7 @@ void part2(vector<Module> modules, vector<bool> memFlip, vector<ConjunctionMemor
 			switch (m.type)
 			{
 			case BROADCAST:
-				for (Connection c : m.connections) {
+				for (Connect c : m.connections) {
 					Q.push({ c.id, imp.high, c.inputId });
 				}
 				break;
@@ -196,7 +196,7 @@ void part2(vector<Module> modules, vector<bool> memFlip, vector<ConjunctionMemor
 				state = memFlip[m.memoryIndex];
 				state = !state;
 				memFlip[m.memoryIndex] = state;
-				for (Connection c : m.connections) {
+				for (Connect c : m.connections) {
 					Q.push({ c.id, state, c.inputId });
 				}
 				break;
@@ -208,7 +208,7 @@ void part2(vector<Module> modules, vector<bool> memFlip, vector<ConjunctionMemor
 					memCon[m.memoryIndex].signals[imp.inputId] = imp.high;
 				}
 				allHighs = memCon[m.memoryIndex].highCount == memCon[m.memoryIndex].signals.size();
-				for (Connection c : m.connections) {
+				for (Connect c : m.connections) {
 					Q.push({ c.id, !allHighs, c.inputId });
 				}
 				break;
@@ -279,7 +279,7 @@ void day20() {
 		else m.memoryIndex = 0;
 		const auto& splits = split(l.substr(firstSpace + 3), ',');
 		for (auto& s : splits) {
-			Connection conn;
+			Connect conn;
 			conn.name = s.substr(1);
 			m.connections.push_back(conn);
 		}
@@ -291,7 +291,7 @@ void day20() {
 	modules.push_back(outModule);
 
 	for (Module& m : modules) {
-		for (Connection& c : m.connections) {
+		for (Connect& c : m.connections) {
 			c.inputId = 0;
 			if (namesToIndexes.count(c.name) == 0) {
 				c.id = outModule.index;
