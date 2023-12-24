@@ -37,5 +37,5 @@ vector<string> split(const string& s, char delimiter) {
 }
 
 int main() {
-    day23();
+    day24();
 }
